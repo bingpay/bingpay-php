@@ -1,9 +1,24 @@
+# Installation
+
+Using composer
+```
+composer install bingpay/bingpay-php
+```
+Add to your PHP code by including the index.php file
+```require_once "__DIR__/bingpay-php/index.php";```
+
 # Usage
+## Configuration
+Download the repo, head over to index.php and edit the addPrivateKey() by adding your key. (Remember to always keep your private key Private!!!)
+  ```php 
+   // call the connection class
+        $connection = new Connection();
 
-Download the repo, head over to index.php and edit the addPrivateKey() by adding your key.. thats all for installation.
-
-## Example code
-To check balance of your account, you can use the following code:
+        // Add your private key here
+        $connection->addPrivateKey('1dd501141dffd9d68f254b241f05871b8f10754c90f4832ad9');
+        
+  ```
+### To retrieve your wallet balance
 
 ```php
 // make sure to call the class Bingpay
@@ -13,12 +28,12 @@ $bingpay->getBalance()->data->balance;
 
 ```
 
-# Airtime Class
+### To fetch all networks
 
 ```php
-// Get all networks
  var_dump($bingpay->fetchAllNetwork());
 // returns an array of all networks
+
 // you can loop through the arrays from the data property
 foreach($bingpay->fetchAllNetwork()->data as $data){
     echo 'Network Provider: '.$data->name;
@@ -26,63 +41,78 @@ foreach($bingpay->fetchAllNetwork()->data as $data){
     echo 'Network Note: '.$data->note;
     echo '<br>';
 }
-// Purchase Airtime
-$bingpay->purchaseAirtime('08733', 100, 1)->message;
+```
+### Airtime Purchase
+```php
+$bingpay->purchaseAirtime('$phone_number', $amount, $network_id)->message;
 // returns a message
-// Verify Phone Number
-$bingpay->verifyNumber('08733', 100)->message;
+```
+### Verify Phone Number
+```php
+$bingpay->verifyNumber('$phone_number', $country_iso)->message;
 // returns a message
 ```
 
-# Bank Class
+### Fetch all banks
 ```php
-// Get all banks
 $bingpay->fetchAllBanks();
 // returns an array of all banks
-// resolve bank
-$bingpay->resolveBank(214, 7412636015)->message;
+```
+### Resolve bank account details
+```php
+$bingpay->resolveBank($bank_code, $account_number)->message;
 // returns a message
 ```
 
-# Data class
+### Fetch all data plans
 ```php
-// Get all data plans
 $bingpay->getAllDataPlan();
 // returns an array of all data plans
-// Get data plan of a network
-$bingpay->getDataPlan(1);
-// returns an array of data plan
-// Purchase data
-$bingpay->buyData('082', 100, 1);
-// returns a message
 ```
-
-# Trade class
+### Fetch plans of a network
 ```php
-//Convert airtime to cash
-$bingpay->airtimeToCash(100, 1, '081')->message;
+$bingpay->getDataPlan($network_id);
+// returns an array of data plan
+```
+### Data Purchase
+```php
+$bingpay->buyData('$phone_number', $plan_id, $network_id);
 // returns a message
-// Get network fee
-$bingpay->getNetworkFee(100, 1)->message;
+```
+### Fetch network fee
+```php
+$bingpay->getNetworkFee($amount, $network_id)->message;
+// returns a message
+```
+### Convert airtime to cash
+```php
+$bingpay->airtimeToCash($amount, $network_id, '$phone_number')->message;
 // returns a message
 ```
 
-# Utility class
+### Fetch all bill services
 ```php
 $bingpay->getAllService();
 // returns an array of all services
-// Get service of a network
-$bingpay->getSingleService(1);
+```
+### Fetch service variation
+```php
+$bingpay->getSingleService($service_id);
 // returns an array of service
-$bingpay->verifyCustomer(1,1,'prepaid')->message;
+```
+ ### Verify customer id
+ ```php
+$bingpay->verifyCustomer($service_id,$customer_id,'prepaid')->message;
 // returns a message
-$bingpay->purchaseBill(1,1,2,1)->message;
+```
+ ### Perform bill purchase
+  ```php
+$bingpay->purchaseBill($service_id,$customer_id,$variation,$amount)->message;
 // returns a message
 ```
 
-# Verify class
+### Verify BVN Number
 ```php
-// Verify BVN number
-$bingpay->verifyBVN('john', 'dod', '0811', '8393')->message;
+$bingpay->verifyBVN('$firstname', '$lastname', '$phone_number', '$bvn')->message;
 // returns a message
 ```
