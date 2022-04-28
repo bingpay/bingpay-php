@@ -1,6 +1,9 @@
 {
     "name": "bingpay/bingpay-api",
-    "description": "Consuming bingpay.ng api",
+    "description": "A PHP Wrapper for Bingpay API",
+    "type": "library",
+    "license": "GPL-3.0-or-later",
+    "version": "1.0",
     "autoload": {
         "psr-4": {
             "BingPay\\": "src/BingPay"
